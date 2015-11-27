@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from os import path
-from cStringIO import StringIO
 import subprocess
 
 
@@ -37,9 +36,6 @@ def smime_sign(signer_cert, signer_key, recipient_cert, content, output_format):
             output_format=output_format,
             supported_formats=", ".join(OUTPUT_FORMATS),
         ))
-
-    stdout = StringIO()
-    stderr = StringIO()
 
     process = subprocess.Popen(
         [
