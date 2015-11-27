@@ -57,7 +57,7 @@ def smime_sign(signer_cert, signer_key, recipient_cert, content, output_format):
     if process.returncode:
         raise RuntimeError("OpenSSL failed with #{returncode}: {stderr}".format(
             returncode=process.returncode,
-            stderr=stderr.getvalue(),
+            stderr=stderr,
         ))
 
     return stdout
