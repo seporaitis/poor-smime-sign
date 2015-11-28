@@ -36,7 +36,7 @@ setup(
     install_requires=requirements,
     license="AGPLv3+",
     zip_safe=False,
-    keywords='poor_smime_sign',
+    keywords='smime sign passbook',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
