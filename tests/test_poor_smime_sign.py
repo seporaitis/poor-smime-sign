@@ -9,7 +9,7 @@ from poor_smime_sign import smime_sign, smime_verify
 
 
 def _read_file(abs_path):
-        with file(abs_path, 'r') as f:
+        with open(abs_path, 'r') as f:
             return f.read()
 
 
