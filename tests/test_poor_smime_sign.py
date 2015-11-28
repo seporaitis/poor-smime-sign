@@ -248,7 +248,7 @@ class PoorSmimeSignTest(unittest.TestCase):
                 output_format='PEM',
             )
 
-        self.assertRegexpMatches(ctx.exception.message, r'OpenSSL failed with #2: .*')
+        self.assertRegexpMatches(ctx.exception.message, r'OpenSSL failed with #[\d]+: .*')
 
 
 if __name__ == '__main__':
