@@ -9,7 +9,7 @@ from poor_smime_sign import smime_sign, smime_verify
 
 
 def _read_file(abs_path):
-        with open(abs_path, 'r') as f:
+        with open(abs_path, 'rb') as f:
             return f.read()
 
 
@@ -163,7 +163,7 @@ class PoorSmimeSignTest(unittest.TestCase):
             )
 
         self.assertEqual(
-            ctx.exception.message,
+            str(ctx.exception),
             "{file_list} must be absolute paths to existing files".format(
                 file_list=", ".join([
                     relative_signer_cert,
@@ -186,7 +186,7 @@ class PoorSmimeSignTest(unittest.TestCase):
             )
 
         self.assertEqual(
-            ctx.exception.message,
+            str(ctx.exception),
             "{file_list} must be absolute paths to existing files".format(
                 file_list=", ".join([
                     self.signer_cert_path,
@@ -209,7 +209,7 @@ class PoorSmimeSignTest(unittest.TestCase):
             )
 
         self.assertEqual(
-            ctx.exception.message,
+            str(ctx.exception),
             "{file_list} must be absolute paths to existing files".format(
                 file_list=", ".join([
                     self.signer_cert_path,
@@ -230,7 +230,7 @@ class PoorSmimeSignTest(unittest.TestCase):
             )
 
         self.assertEqual(
-            ctx.exception.message,
+            str(ctx.exception),
             ("{output_format}' not found in the set of supported "
              "formats: {supported_formats}").format(
                  output_format='INCORRECT',
@@ -248,7 +248,7 @@ class PoorSmimeSignTest(unittest.TestCase):
                 output_format='PEM',
             )
 
-        self.assertRegexpMatches(ctx.exception.message, r'OpenSSL failed with #[\d]+: .*')
+        self.assertRegexpMatches(str(ctx.exception), r'OpenSSL failed with #[\d]+: .*')
 
 
 if __name__ == '__main__':
