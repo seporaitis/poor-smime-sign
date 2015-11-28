@@ -151,7 +151,7 @@ class PoorSmimeSignTest(unittest.TestCase):
             )
 
     def test_relative_signer_cert_error(self):
-        relative_signer_cert = "files/certificate.pem"
+        relative_signer_cert = "files/signer.cert"
 
         with self.assertRaises(ValueError) as ctx:
             smime_sign(
@@ -164,7 +164,7 @@ class PoorSmimeSignTest(unittest.TestCase):
 
         self.assertEqual(
             ctx.exception.message,
-            "{file_list} must be absolute paths to existing files.".format(
+            "{file_list} must be absolute paths to existing files".format(
                 file_list=", ".join([
                     relative_signer_cert,
                     self.signer_key_path,
@@ -174,7 +174,7 @@ class PoorSmimeSignTest(unittest.TestCase):
         )
 
     def test_relative_signer_key_error(self):
-        relative_signer_key = "files/private.pem"
+        relative_signer_key = "files/signer.pem"
 
         with self.assertRaises(ValueError) as ctx:
             smime_sign(
@@ -187,7 +187,7 @@ class PoorSmimeSignTest(unittest.TestCase):
 
         self.assertEqual(
             ctx.exception.message,
-            "{file_list} must be absolute paths to existing files.".format(
+            "{file_list} must be absolute paths to existing files".format(
                 file_list=", ".join([
                     self.signer_cert_path,
                     relative_signer_key,
@@ -197,7 +197,7 @@ class PoorSmimeSignTest(unittest.TestCase):
         )
 
     def test_relative_recipient_cert_error(self):
-        relative_recipient_cert = "files/wwdr.pem"
+        relative_recipient_cert = "files/recipient.pem"
 
         with self.assertRaises(ValueError) as ctx:
             smime_sign(
@@ -210,7 +210,7 @@ class PoorSmimeSignTest(unittest.TestCase):
 
         self.assertEqual(
             ctx.exception.message,
-            "{file_list} must be absolute paths to existing files.".format(
+            "{file_list} must be absolute paths to existing files".format(
                 file_list=", ".join([
                     self.signer_cert_path,
                     self.signer_key_path,
