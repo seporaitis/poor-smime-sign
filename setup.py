@@ -20,7 +20,7 @@ test_requirements = [
 ]
 
 setup(
-    name='poor_smime_sign',
+    name='poor-smime-sign',
     version='1.0.0',
     description="A very poor tool to do S/MIME signatures on binary files. Probably insecurely.",
     long_description=readme + '\n\n' + history,
