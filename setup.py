@@ -21,7 +21,7 @@ test_requirements = [
 
 setup(
     name='poor-smime-sign',
-    version='1.0.0',
+    version='1.0.1',
     description="A very poor tool to do S/MIME signatures on binary files. Probably insecurely.",
     long_description=readme + '\n\n' + history,
     author="Julius Seporaitis",
@@ -43,7 +43,6 @@ setup(
         'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
         'Natural Language :: English',
         "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
