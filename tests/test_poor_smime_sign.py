@@ -234,7 +234,7 @@ class PoorSmimeSignTest(unittest.TestCase):
             ("{output_format}' not found in the set of supported "
              "formats: {supported_formats}").format(
                  output_format='INCORRECT',
-                 supported_formats=", ".join({'SMIME', 'PEM', 'DER'}),
+                 supported_formats=", ".join(('SMIME', 'PEM', 'DER')),
             )
         )
 

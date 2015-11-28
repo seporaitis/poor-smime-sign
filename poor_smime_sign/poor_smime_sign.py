@@ -4,7 +4,7 @@ import subprocess
 
 __all__ = ['smime_sign', 'smime_verify']
 
-OUTPUT_FORMATS = {'SMIME', 'PEM', 'DER'}
+OUTPUT_FORMATS = ('SMIME', 'PEM', 'DER')
 
 FileErrorMessage = ("{file_list} must be absolute paths to existing "
                     "files").format
