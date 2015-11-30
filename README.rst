@@ -1,6 +1,6 @@
-===============================
+===============
 poor-smime-sign
-===============================
+===============
 
 .. image:: https://img.shields.io/pypi/v/poor-smime-sign.svg
         :target: https://pypi.python.org/pypi/poor-smime-sign
@@ -58,10 +58,10 @@ Why not?
 
 
 API
-=========
+===
 
 ``smime_sign(signer_cert_path, signer_key_path, recipient_cert_path, content, output_format)``
----------
+----------------------------------------------------------------------------------------------
 
 Generates and returns signature string for ``content`` in
 ``output_format``.
@@ -85,7 +85,7 @@ Example to generate signature for Passbook manifest:
     ... )
 
 ``smime_verify(signer_cert_path, content_path, signature_path, signature_format)``
----------
+----------------------------------------------------------------------------------
 
 Verifies a ``content_path`` file against a signature at ``signature_path``.
 
