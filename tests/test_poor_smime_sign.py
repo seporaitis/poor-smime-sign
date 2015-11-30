@@ -13,18 +13,22 @@ def _read_file(abs_path):
             return f.read()
 
 
+def _file_fixture(rel_path):
+    return path.join(path.dirname(__file__), rel_path)
+
+
 class PoorSmimeSignTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.signer_cert_path = path.join(path.dirname(__file__), "files/signer.cert")
-        cls.signer_key_path = path.join(path.dirname(__file__), "files/signer.pem")
-        cls.recipient_cert_path = path.join(path.dirname(__file__), "files/recipient.cert")
-        cls.manifest_json_path = path.join(path.dirname(__file__), "files/manifest.json")
+        cls.signer_cert_path = _file_fixture("files/signer.cert")
+        cls.signer_key_path = _file_fixture("files/signer.pem")
+        cls.recipient_cert_path = _file_fixture("files/recipient.cert")
+        cls.manifest_json_path = _file_fixture("files/manifest.json")
 
-        cls.signature_smime_path = path.join(path.dirname(__file__), "files/signature.smime")
-        cls.signature_pem_path = path.join(path.dirname(__file__), "files/signature.pem")
-        cls.signature_der_path = path.join(path.dirname(__file__), "files/signature.der")
+        cls.signature_smime_path = _file_fixture("files/signature.smime")
+        cls.signature_pem_path = _file_fixture("files/signature.pem")
+        cls.signature_der_path = _file_fixture("files/signature.der")
 
         cls.signature_smime = _read_file(cls.signature_smime_path)
         cls.signature_pem = _read_file(cls.signature_pem_path)
@@ -248,7 +252,9 @@ class PoorSmimeSignTest(unittest.TestCase):
                 output_format='PEM',
             )
 
-        self.assertRegexpMatches(str(ctx.exception), r'OpenSSL failed with #[\d]+: .*')
+        self.assertRegexpMatches(
+            str(ctx.exception), r'OpenSSL failed with #[\d]+: .*'
+        )
 
 
 if __name__ == '__main__':
