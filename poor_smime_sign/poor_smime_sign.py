@@ -42,7 +42,7 @@ def smime_sign(signer_cert_path, signer_key_path, cert_path, recipient_cert_path
 
     """
     optional_file_list = filter(bool, [cert_path, recipient_cert_path])
-    file_list = [signer_cert_path, signer_key_path] + optional_file_list
+    file_list = [signer_cert_path, signer_key_path] + list(optional_file_list)
     if not all(path.isfile(p) and path.isabs(p) for p in file_list):
         raise ValueError(FileErrorMessage(file_list=", ".join(file_list)))
 
