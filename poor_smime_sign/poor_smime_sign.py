@@ -13,8 +13,8 @@ FormatErrorMessage = ("{output_format}' not found in the set of supported "
 OpenSSLErrorMessage = "OpenSSL failed with #{returncode}: {stderr}".format
 
 
-def smime_sign(signer_cert_path, signer_key_path, cert_path, recipient_cert_path,
-               content, output_format):
+def smime_sign(signer_cert_path, signer_key_path, cert_path,
+               recipient_cert_path, content, output_format):
     """Generate an S/MIME signature.
 
     Internally this function does nothing more, but call `openssl
