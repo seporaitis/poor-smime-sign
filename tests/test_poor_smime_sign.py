@@ -23,6 +23,7 @@ class PoorSmimeSignTest(unittest.TestCase):
     def setUpClass(cls):
         cls.signer_cert_path = _file_fixture("files/signer.cert")
         cls.signer_key_path = _file_fixture("files/signer.pem")
+        cls.cert_path = _file_fixture("files/recipient.cert")
         cls.recipient_cert_path = _file_fixture("files/recipient.cert")
         cls.manifest_json_path = _file_fixture("files/manifest.json")
 
@@ -66,10 +67,80 @@ class PoorSmimeSignTest(unittest.TestCase):
             )
         )
 
-    def test_smime_format(self):
+    def test_smime_format_no_recipient(self):
         actual_smime = smime_sign(
             signer_cert_path=self.signer_cert_path,
             signer_key_path=self.signer_key_path,
+            cert_path=self.cert_path,
+            recipient_cert_path=None,
+            content=self.maniphest_json,
+            output_format='SMIME',
+        )
+
+        with tempfile.NamedTemporaryFile(delete=True) as temp:
+            temp.write(actual_smime)
+            temp.flush()
+
+            self.assertTrue(
+                smime_verify(
+                    signer_cert_path=self.signer_cert_path,
+                    content_path=self.manifest_json_path,
+                    signature_path=path.abspath(temp.name),
+                    signature_format='SMIME',
+                )
+            )
+
+    def test_pem_format_no_recipient(self):
+        actual_smime = smime_sign(
+            signer_cert_path=self.signer_cert_path,
+            signer_key_path=self.signer_key_path,
+            cert_path=self.cert_path,
+            recipient_cert_path=None,
+            content=self.maniphest_json,
+            output_format='PEM',
+        )
+
+        with tempfile.NamedTemporaryFile(delete=True) as temp:
+            temp.write(actual_smime)
+            temp.flush()
+
+            self.assertTrue(
+                smime_verify(
+                    signer_cert_path=self.signer_cert_path,
+                    content_path=self.manifest_json_path,
+                    signature_path=path.abspath(temp.name),
+                    signature_format='PEM',
+                )
+            )
+
+    def test_der_format_no_recipient(self):
+        actual_smime = smime_sign(
+            signer_cert_path=self.signer_cert_path,
+            signer_key_path=self.signer_key_path,
+            cert_path=self.cert_path,
+            recipient_cert_path=None,
+            content=self.maniphest_json,
+            output_format='DER',
+        )
+
+        with tempfile.NamedTemporaryFile(delete=True) as temp:
+            temp.write(actual_smime)
+            temp.flush()
+
+            self.assertTrue(
+                smime_verify(
+                    signer_cert_path=self.signer_cert_path,
+                    content_path=self.manifest_json_path,
+                    signature_path=path.abspath(temp.name),
+                    signature_format='DER',
+                )
+            )
+
+    def test_smime_format_no_certs(self):
+        actual_smime = smime_sign(
+            signer_cert_path=self.signer_cert_path,
+            signer_key_path=self.signer_key_path,
+            cert_path=None,
             recipient_cert_path=self.recipient_cert_path,
             content=self.maniphest_json,
             output_format='SMIME',
@@ -88,10 +159,11 @@ class PoorSmimeSignTest(unittest.TestCase):
                 )
             )
 
-    def test_pem_format(self):
+    def test_pem_format_no_certs(self):
         actual_smime = smime_sign(
             signer_cert_path=self.signer_cert_path,
             signer_key_path=self.signer_key_path,
+            cert_path=None,
             recipient_cert_path=self.recipient_cert_path,
             content=self.maniphest_json,
             output_format='PEM',
@@ -110,10 +182,11 @@ class PoorSmimeSignTest(unittest.TestCase):
                 )
             )
 
-    def test_der_format(self):
+    def test_der_format_no_certs(self):
         actual_smime = smime_sign(
             signer_cert_path=self.signer_cert_path,
             signer_key_path=self.signer_key_path,
+            cert_path=None,
             recipient_cert_path=self.recipient_cert_path,
             content=self.maniphest_json,
             output_format='DER',
@@ -136,6 +209,7 @@ class PoorSmimeSignTest(unittest.TestCase):
         actual_smime = smime_sign(
             signer_cert_path=self.signer_cert_path,
             signer_key_path=self.signer_key_path,
+            cert_path=self.cert_path,
             recipient_cert_path=self.recipient_cert_path,
             content=self.maniphest_json,
             output_format='SMIME',
@@ -161,6 +235,7 @@ class PoorSmimeSignTest(unittest.TestCase):
             smime_sign(
                 signer_cert_path=relative_signer_cert,
                 signer_key_path=self.signer_key_path,
+                cert_path=self.cert_path,
                 recipient_cert_path=self.recipient_cert_path,
                 content=self.maniphest_json,
                 output_format='SMIME',
@@ -172,6 +247,7 @@ class PoorSmimeSignTest(unittest.TestCase):
                 file_list=", ".join([
                     relative_signer_cert,
                     self.signer_key_path,
+                    self.cert_path,
                     self.recipient_cert_path,
                 ]),
             )
@@ -184,6 +260,7 @@ class PoorSmimeSignTest(unittest.TestCase):
             smime_sign(
                 signer_cert_path=self.signer_cert_path,
                 signer_key_path=relative_signer_key,
+                cert_path=self.cert_path,
                 recipient_cert_path=self.recipient_cert_path,
                 content=self.maniphest_json,
                 output_format='SMIME',
@@ -195,6 +272,7 @@ class PoorSmimeSignTest(unittest.TestCase):
                 file_list=", ".join([
                     self.signer_cert_path,
                     relative_signer_key,
+                    self.cert_path,
                     self.recipient_cert_path,
                 ]),
             )
@@ -207,6 +285,7 @@ class PoorSmimeSignTest(unittest.TestCase):
             smime_sign(
                 signer_cert_path=self.signer_cert_path,
                 signer_key_path=self.signer_key_path,
+                cert_path=self.cert_path,
                 recipient_cert_path=relative_recipient_cert,
                 content=self.maniphest_json,
                 output_format='SMIME',
@@ -218,6 +297,7 @@ class PoorSmimeSignTest(unittest.TestCase):
                 file_list=", ".join([
                     self.signer_cert_path,
                     self.signer_key_path,
+                    self.cert_path,
                     relative_recipient_cert,
                 ]),
             )
@@ -228,6 +308,7 @@ class PoorSmimeSignTest(unittest.TestCase):
             smime_sign(
                 signer_cert_path=self.signer_cert_path,
                 signer_key_path=self.signer_key_path,
+                cert_path=self.cert_path,
                 recipient_cert_path=self.recipient_cert_path,
                 content=self.maniphest_json,
                 output_format='INCORRECT',
@@ -247,6 +328,7 @@ class PoorSmimeSignTest(unittest.TestCase):
             smime_sign(
                 signer_cert_path=self.signer_key_path,
                 signer_key_path=self.recipient_cert_path,
+                cert_path=self.cert_path,
                 recipient_cert_path=self.signer_key_path,
                 content=self.maniphest_json,
                 output_format='PEM',

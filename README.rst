@@ -60,7 +60,7 @@ Why not?
 API
 ===
 
-``smime_sign(signer_cert_path, signer_key_path, recipient_cert_path, content, output_format)``
+``smime_sign(signer_cert_path, signer_key_path, cert_path, recipient_cert_path, content, output_format)``
 ----------------------------------------------------------------------------------------------
 
 Generates and returns signature string for ``content`` in
@@ -79,7 +79,8 @@ Example to generate signature for Passbook manifest:
     >>> signature = smime_sign(
     ...     signer_cert_path="/path/to/files/signer.cert",
     ...     signer_key_path="/path/to/files/signer.pem",
-    ...     recipient_cert_path="/path/to/files/recipient.cert",
+    ...     cert_path="/path/to/files/intermediate.cert",
+    ...     recipient_cert_path=None,
     ...     content=manifest_json,
     ...     output_format="DER",
     ... )

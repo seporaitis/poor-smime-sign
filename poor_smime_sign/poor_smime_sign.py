@@ -13,8 +13,8 @@ FormatErrorMessage = ("{output_format}' not found in the set of supported "
 OpenSSLErrorMessage = "OpenSSL failed with #{returncode}: {stderr}".format
 
 
-def smime_sign(signer_cert_path, signer_key_path, recipient_cert_path, content,
-               output_format):
+def smime_sign(signer_cert_path, signer_key_path, cert_path, recipient_cert_path,
+               content, output_format):
     """Generate an S/MIME signature.
 
     Internally this function does nothing more, but call `openssl
@@ -22,10 +22,13 @@ def smime_sign(signer_cert_path, signer_key_path, recipient_cert_path, content,
     https://www.openssl.org/docs/manmaster/apps/smime.html
 
     Arguments:
-    - `signer_cert_path`: string, absolute path to signer certificate file.
+    - `signer_cert_path`: string, absolute path to signer certificate file;
+       the file can contain multiple certificate chain.
     - `signer_key_path`: string, absolute path to signer private key file.
+    - `cert_path`: string, absolute path to file containing any intermediate
+       certificates.
     - `recipient_cert_path`: string, absolute path to recipient certificate
-      file.
+      file (pass `None` if not required).
     - `content`: stream-like object pointing to content that will be signed.
     - `output_format`: string, signature output format (see output formats
       below).
@@ -38,7 +41,8 @@ def smime_sign(signer_cert_path, signer_key_path, recipient_cert_path, content,
     Returns: string with signature.
 
     """
-    file_list = [signer_cert_path, signer_key_path, recipient_cert_path]
+    optional_file_list = filter(bool, [cert_path, recipient_cert_path])
+    file_list = [signer_cert_path, signer_key_path] + optional_file_list
     if not all(path.isfile(p) and path.isabs(p) for p in file_list):
         raise ValueError(FileErrorMessage(file_list=", ".join(file_list)))
 
@@ -50,16 +54,23 @@ def smime_sign(signer_cert_path, signer_key_path, recipient_cert_path, content,
             )
         )
 
+    command = [
+        "openssl", "smime",
+        "-binary",
+        "-sign",
+        "-signer", signer_cert_path,
+        "-inkey", signer_key_path,
+        "-outform", output_format,
+    ]
+
+    if cert_path:
+        command.extend(["-certfile", cert_path])
+
+    if recipient_cert_path:
+        command.append(recipient_cert_path)
+
     process = subprocess.Popen(
-        [
-            "openssl", "smime",
-            "-binary",
-            "-sign",
-            "-signer", signer_cert_path,
-            "-inkey", signer_key_path,
-            "-outform", output_format,
-            recipient_cert_path
-        ],
+        command,
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
