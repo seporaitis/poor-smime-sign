@@ -61,7 +61,7 @@ API
 ===
 
 ``smime_sign(signer_cert_path, signer_key_path, cert_path, recipient_cert_path, content, output_format)``
-----------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
 
 Generates and returns signature string for ``content`` in
 ``output_format``.
