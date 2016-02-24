@@ -14,7 +14,7 @@ OpenSSLErrorMessage = "OpenSSL failed with #{returncode}: {stderr}".format
 
 
 def smime_sign(signer_cert_path, signer_key_path, cert_path,
-               recipient_cert_path, content, output_format):
+               content, output_format, recipient_cert_path=None):
     """Generate an S/MIME signature.
 
     Internally this function does nothing more, but call `openssl
@@ -27,11 +27,11 @@ def smime_sign(signer_cert_path, signer_key_path, cert_path,
     - `signer_key_path`: string, absolute path to signer private key file.
     - `cert_path`: string, absolute path to file containing any intermediate
        certificates.
-    - `recipient_cert_path`: string, absolute path to recipient certificate
-      file (pass `None` if not required).
     - `content`: stream-like object pointing to content that will be signed.
     - `output_format`: string, signature output format (see output formats
       below).
+    - `recipient_cert_path`: string, absolute path to recipient certificate
+      file (not required).
 
     Output formats:
     - 'SMIME': (default)
