@@ -13,8 +13,9 @@ FormatErrorMessage = ("{output_format}' not found in the set of supported "
 OpenSSLErrorMessage = "OpenSSL failed with #{returncode}: {stderr}".format
 
 
-def smime_sign(signer_cert_path, signer_key_path, cert_path,
-               content, output_format, recipient_cert_path=None):
+def smime_sign(signer_cert_path, signer_key_path, content,
+               output_format='SMIME',
+               cert_path=None, recipient_cert_path=None):
     """Generate an S/MIME signature.
 
     Internally this function does nothing more, but call `openssl
@@ -25,11 +26,11 @@ def smime_sign(signer_cert_path, signer_key_path, cert_path,
     - `signer_cert_path`: string, absolute path to signer certificate file;
        the file can contain multiple certificate chain.
     - `signer_key_path`: string, absolute path to signer private key file.
-    - `cert_path`: string, absolute path to file containing any intermediate
-       certificates.
     - `content`: stream-like object pointing to content that will be signed.
     - `output_format`: string, signature output format (see output formats
-      below).
+      below, not required).
+    - `cert_path`: string, absolute path to file containing any intermediate
+       certificates (not required).
     - `recipient_cert_path`: string, absolute path to recipient certificate
       file (not required).
 
@@ -90,7 +91,7 @@ def smime_sign(signer_cert_path, signer_key_path, cert_path,
 
 
 def smime_verify(signer_cert_path, content_path, signature_path,
-                 signature_format):
+                 signature_format='SMIME'):
     """Verify an S/MIME signature.
 
     Internally this function does nothing more, but call `openssl
@@ -103,7 +104,7 @@ def smime_verify(signer_cert_path, content_path, signature_path,
       signed.
     - `signature_path`: string, absolute path to signature file.
     - `signature_format`: string, signature format (see signature formats
-      below).
+      below, not required).
 
     Signature formats:
     - 'SMIME': (default)
