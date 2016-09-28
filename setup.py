@@ -21,7 +21,7 @@ test_requirements = [
 
 setup(
     name='poor-smime-sign',
-    version='2.0.2',
+    version='2.0.3',
     description="A very poor tool to do S/MIME signatures on binary files. Probably insecurely.",
     long_description=readme + '\n\n' + history,
     author="Julius Seporaitis",
@@ -34,13 +34,13 @@ setup(
                  'poor_smime_sign'},
     include_package_data=True,
     install_requires=requirements,
-    license="AGPLv3+",
+    license="MIT",
     zip_safe=False,
     keywords='smime sign passbook',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
+        'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         "Programming Language :: Python :: 2",
         'Programming Language :: Python :: 2.7',
