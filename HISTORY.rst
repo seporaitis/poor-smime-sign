@@ -8,6 +8,10 @@ History
 
 * Change the licence from ``AGPLv3`` to ``MIT``.
 
+2.0.2 (2016-01-07)
+------------------
+
+* Fix documentation rendering on PyPI
 
 2.0.1 (2016-01-07)
 ------------------
