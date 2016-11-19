@@ -1,23 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import os
+import re
 
 from setuptools import setup
 
+
+def get_version(package):
+    """
+    Return package version as listed in `__version__` in `init.py`.
+    """
+    init_py = open(os.path.join(package, '__init__.py')).read()
+    return re.search("__version__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
+
+
+version = get_version('poor_smime_sign')
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
 with open('HISTORY.rst') as history_file:
     history = history_file.read().replace('.. :changelog:', '')
-
-requirements = [
-    # TODO: put package requirements here
-]
-
-test_requirements = [
-    # TODO: put package test requirements here
-]
 
 setup(
     name='poor-smime-sign',
@@ -33,7 +36,7 @@ setup(
     package_dir={'poor_smime_sign':
                  'poor_smime_sign'},
     include_package_data=True,
-    install_requires=requirements,
+    install_requires=[],
     license="MIT",
     zip_safe=False,
     keywords='smime sign passbook',
@@ -49,5 +52,5 @@ setup(
         'Programming Language :: Python :: 3.4',
     ],
     test_suite='tests',
-    tests_require=test_requirements
+    tests_require=[]
 )

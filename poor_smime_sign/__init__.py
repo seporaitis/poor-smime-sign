@@ -6,4 +6,4 @@ __all__ = ['smime_sign', 'smime_verify']
 
 __author__ = 'Julius Seporaitis'
 __email__ = 'julius@seporaitis.net'
-__version__ = '1.0.0'
+__version__ = '2.0.3'
